@@ -15,7 +15,7 @@
     </nav>
     <main>
         <section>
-            <form action="./uploadFile.php" method="post" enctype="multipart/form-data">
+            <form>
                 <label for="fileToUpload">Upload</label>
                 <input type="file" name='fileToUpload' class="fileToUpload" id="fileToUpload">
             </form>

@@ -1,4 +1,4 @@
-let inputUpload = document.getElementsByClassName('fileToUpload')[0];
+let inputUpload = document.getElementById('fileToUpload');
 inputUpload.addEventListener('change', uploadFile);
 
 async function uploadFile() {

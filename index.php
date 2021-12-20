@@ -15,8 +15,10 @@
     </nav>
     <main>
         <section>
-            <form>
-                <label for="fileToUpload">Upload</label>
+            <form encaptype="multipart/form-data">
+                <label for="folderToUpload">Upload Folder</label>
+                <input type="file" name='folderToUpload' class="folderToUpload" id="folderToUpload" webkitdirectory mozdirectory>
+                <label for="fileToUpload">Upload File</label>
                 <input type="file" name='fileToUpload' class="fileToUpload" id="fileToUpload">
             </form>
         </section>

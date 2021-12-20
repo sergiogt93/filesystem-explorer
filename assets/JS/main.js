@@ -1,17 +1,28 @@
-let inputUpload = document.getElementById('fileToUpload');
-inputUpload.addEventListener('change', uploadFile);
+const inputFileUpload = document.getElementById('fileToUpload');
+inputFileUpload.addEventListener('change', chooseFileOrFolder);
+const inputFolderUpload = document.getElementById('folderToUpload');
+inputFolderUpload.addEventListener('change', chooseFileOrFolder);
 
-async function uploadFile() {
-    if(inputUpload.files.length == 0) {
+function chooseFileOrFolder(event) {
+    if (event.target.name === 'fileToUpload') {
+        const form_data = new FormData();
+        form_data.append('fileToUpload', inputFileUpload.files[0]);
+        uploadFile(form_data, event);
+    } else if (event.target.name === 'folderToUpload') {
+        const form_data = new FormData();
+        form_data.append('folderToUpload', inputFolderUpload.files);
+        console.log(inputFolderUpload.files);
+        // uploadFile(form_data, event);
+    }
+}
+
+async function uploadFile(form_data, event) {
+    if (event.target.files.length == 0) {
         return;
     }
-    const form_data = new FormData();
-    form_data.append('fileToUpload', inputUpload.files[0]);
-
     const parameters = {
-        method: "POST",
+        method: 'POST',
         body: form_data
     };
-
-    const response = await fetch("./uploadFile.php", parameters);
+    const response = await fetch('./uploadFile.php', parameters);
 }

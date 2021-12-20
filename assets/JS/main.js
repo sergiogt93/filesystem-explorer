@@ -15,3 +15,9 @@ async function uploadFile() {
 
     const response = await fetch("./uploadFile.php", parameters);
 }
+
+async function listFilesOfDirectory() {
+    const response = await fetch("./listFilesOfDirectory.php?folder=./files");
+    const data = await response.json();
+    console.log(data);
+}

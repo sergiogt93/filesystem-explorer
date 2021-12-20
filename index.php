@@ -20,11 +20,8 @@
                 <input type="file" name='fileToUpload' class="fileToUpload" id="fileToUpload">
             </form>
         </section>
-        <section>
-            <?php
-            require "./files_control.php";
-            print_r(listDirectory("./files"));
-            ?>
+        <section id="listFiles">
+           
         </section>
     </main>
     <script src="./assets/JS/main.js"></script>

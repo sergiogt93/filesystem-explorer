@@ -24,5 +24,12 @@ async function uploadFile(form_data, event) {
         method: 'POST',
         body: form_data
     };
-    const response = await fetch('./uploadFile.php', parameters);
+
+    const response = await fetch("./uploadFile.php", parameters);
+}
+
+async function listFilesOfDirectory() {
+    const response = await fetch("./listFilesOfDirectory.php?folder=./files");
+    const data = await response.json();
+    console.log(data);
 }

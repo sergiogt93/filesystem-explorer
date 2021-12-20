@@ -1,8 +1,17 @@
-let uploadBtn = document.getElementById('uploadBtn');
-uploadBtn.addEventListener('click', uploadFileModal);
+let inputUpload = document.getElementsByClassName('fileToUpload')[0];
+inputUpload.addEventListener('change', uploadFile);
 
-// function uploadFileModal() {
-//     let bodyModal = document.querySelector('body');
-//     let child = "<input type='file' name='fileToUpload'>";
-//     bodyModal.insertAdjacentHTML('beforeend', child);
-// }
+async function uploadFile() {
+    if(inputUpload.files.length == 0) {
+        return;
+    }
+    const form_data = new FormData();
+    form_data.append('fileToUpload', inputUpload.files[0]);
+
+    const parameters = {
+        method: "POST",
+        body: form_data
+    };
+
+    const response = await fetch("./uploadFile.php", parameters);
+}

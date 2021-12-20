@@ -1,10 +1,5 @@
 <?php
 
-function isFolder($path)
-{
-    return is_dir($path);
-}
-
 function getFileSize($path)
 {
     $fileSize = filesize($path);
@@ -25,20 +20,24 @@ function getFileInfo($path)
     return $pathInfo;
 }
 
-// function showFiles($path)
-// {
-//     $dir = opendir($path);
-//     $files = array();
-//     while (false !== ($current = readdir($dir))) {
-//         if ($current != "." && $current != "..") {
-//             if (is_dir($path.$current)) {
-//                 showFiles($path.$current.'/');
-//             }
-//         }
-//         // } else {
-//         //     $files[] = $current;
-//         // }
-//     };
 
-//     return $files;
-// };
+function listDirectory($dir){
+    $list = scandir($dir);
+
+    unset($list[array_search('.', $list, true)]);
+    unset($list[array_search('..', $list, true)]);
+
+    if (count($list) === 0) return;
+
+    foreach($list as $element){
+        if(!is_dir($dir.'/'.$element)) {
+            echo "<p>$element</p>";
+        }
+        if(is_dir($dir.'/'.$element)) {
+            echo '<details>';
+            echo '<summary>'.$element.'</summary>';
+                listDirectory($dir.'/'.$element);
+            echo '</details>';
+        }
+    }
+}

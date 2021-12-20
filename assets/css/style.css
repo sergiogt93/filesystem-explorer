@@ -1,3 +1,22 @@
+* {
+    font-size: 62,5%;
+
+}
+
+body, html {
+    box-sizing: border-box;
+    padding: 0; 
+    margin: 0;
+}
+
 .fileToUpload, .folderToUpload{
     visibility: hidden;
+}
+
+.navbar {
+    
+}
+
+.form-data {
+margin-top: 300px;
 }

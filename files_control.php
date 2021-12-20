@@ -31,10 +31,10 @@ function listDirectory($dir){
 
     foreach($list as $element){
         if(!is_dir($dir.'/'.$element)) {
-            echo "<p>$element</p>";
+            echo "<p class='list-group-item list-group-item-action list-group-item-light p-3'>$element</p>";
         }
         if(is_dir($dir.'/'.$element)) {
-            echo '<details>';
+            echo '<details class="list-group-item list-group-item-action list-group-item-light p-3">';
             echo '<summary>'.$element.'</summary>';
                 listDirectory($dir.'/'.$element);
             echo '</details>';

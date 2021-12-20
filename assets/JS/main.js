@@ -31,5 +31,9 @@ async function uploadFile(form_data, event) {
 async function listFilesOfDirectory() {
     const response = await fetch("./listFilesOfDirectory.php?folder=./files");
     const data = await response.json();
-    console.log(data);
+}
+
+async function fileInfo() {
+    const response = await fetch("./fileInfo.php?path=./files/Education.txt");
+    const data = await response.json();
 }

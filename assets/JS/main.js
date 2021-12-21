@@ -2,7 +2,8 @@ const inputFileUpload = document.getElementById('fileToUpload');
 inputFileUpload.addEventListener('change', chooseFileOrFolder);
 const inputFolderUpload = document.getElementById('folderToUpload');
 inputFolderUpload.addEventListener('change', chooseFileOrFolder);
-const endpoint = "./files/";
+const endpoint = './files/';
+const listFiles = document.getElementById('listFiles');
 
 function chooseFileOrFolder(event) {
     if (event.target.name === 'fileToUpload') {
@@ -26,7 +27,7 @@ async function uploadFile(form_data, event) {
         body: form_data
     };
 
-    const response = await fetch("./uploadFile.php", parameters);
+    const response = await fetch('./uploadFile.php', parameters);
 }
 
 async function allFiles(path) {
@@ -36,8 +37,8 @@ async function allFiles(path) {
 }
 
 async function listFilesOfDirectory() {
-    const response = await fetch("./listFilesOfDirectory.php?folder=./files");
-    const data = await response.json(); 
+    const response = await fetch('./listFilesOfDirectory.php?folder=./files');
+    const data = await response.json();
     return data;
 }
 
@@ -47,12 +48,43 @@ async function fileInfo(path) {
     return data;
 }
 
-window.addEventListener("DOMContentLoaded", async() => {
-    const data = await allFiles(endpoint);
-    console.log(data);
-    const files = await listFilesOfDirectory();
-    for (const file in files) {
-        const data = await fileInfo(files[file]);
+async function displayAllFoldersAllFiles(path) {
+    const data = await allFiles(path);
+    console.log(data)
+}
+
+async function displayOneFolderAllFiles(folder) {
+    const files = await listFilesOfDirectory(endpoint + folder);
+    for (const fileName in files) {
+        const data = await fileInfo(files[fileName]);
         console.log(data);
+        const template = ` 
+        <div class="row border border-dark">
+            <div class="col-sm">${data.name}</div>
+            <div class="col-sm">${data.lastModified}</div>
+            <div class="col-sm">${data.extension}</div>
+            <div class="col-sm">${data.size}</div>
+            <div class="col-sm">
+                <i class="fas fa-edit" onclick="editFile(this)"></i>
+                </div>
+            <div class="col-sm" onclick="deleteFile(this)">
+                <i class="far fa-trash-alt"></i>
+            </div>
+        </div>`;
+        listFiles.insertAdjacentHTML("beforeend", template);
+
     }
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+    displayAllFoldersAllFiles(endpoint);
+    displayOneFolderAllFiles(endpoint);
 });
+
+function editFile(e){
+    const father = e.parentElement.parentElement;
+}
+
+function deleteFile(e){
+    const father = e.parentElement.parentElement;
+}

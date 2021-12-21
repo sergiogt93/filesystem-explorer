@@ -30,14 +30,8 @@ async function uploadFile(form_data, event) {
     const response = await fetch('./uploadFile.php', parameters);
 }
 
-async function allFiles(path) {
-    const response = await fetch(`./allFiles.php?path=./${path}`);
-    const data = await response.json();
-    return data;
-}
-
-async function listFilesOfDirectory() {
-    const response = await fetch('./listFilesOfDirectory.php?folder=./files');
+async function listFilesOfDirectory(path) {
+    const response = await fetch(`./listFilesOfDirectory.php?folder=${path}`);
     const data = await response.json();
     return data;
 }
@@ -48,13 +42,8 @@ async function fileInfo(path) {
     return data;
 }
 
-async function displayAllFoldersAllFiles(path) {
-    const data = await allFiles(path);
-    console.log(data)
-}
-
 async function displayOneFolderAllFiles(folder) {
-    const files = await listFilesOfDirectory(endpoint + folder);
+    const files = await listFilesOfDirectory(folder);
     for (const fileName in files) {
         const data = await fileInfo(files[fileName]);
         console.log(data);
@@ -72,12 +61,10 @@ async function displayOneFolderAllFiles(folder) {
             </div>
         </div>`;
         listFiles.insertAdjacentHTML("beforeend", template);
-
     }
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
-    displayAllFoldersAllFiles(endpoint);
     displayOneFolderAllFiles(endpoint);
 });
 

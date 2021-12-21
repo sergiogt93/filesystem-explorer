@@ -4,14 +4,10 @@
     }
 
     $folder = $_GET['folder'];
-    $list = scandir($folder);
-    unset($list[array_search('.', $list, true)]);
-    unset($list[array_search('..', $list, true)]);
+    $files = scandir($folder);
+    unset($files[array_search('.', $files, true)]);
+    unset($files[array_search('..', $files, true)]);
 
-    foreach ($list as $key => $value) {
-        if(is_dir($folder.'/'.$value)) {
-            unset($list[$key]);
-        }
-    }
+    $listFilter = array_filter($files, fn ($file) => !is_dir($folder.'/'.$file));
 
-    echo json_encode($list);
+    echo json_encode($listFilter);

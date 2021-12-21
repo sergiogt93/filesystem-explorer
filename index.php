@@ -38,15 +38,11 @@
                 <button class="btn btn-primary m-2">Upload File</button>
                 <input type="file" id="fileToUpload" name='fileToUpload' class="fileToUpload">
             </form>
-            <div class="list-group">
-                <?php
-                require "./files_control.php";
-                print_r(listDirectory("./files"));
-                ?>
+            <div class="list-group" id="listAllFiles">
             </div>
         </section>
         <section class="container-fluid border border-dark">
-                <div class="row border border-dark">
+                <div class="row border border-dark" id="listFile">
                     <div class="col-sm">
                         Name
                     </div>
@@ -71,7 +67,6 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
     <script src="./assets/JS/main.js"></script>
 </body>
 

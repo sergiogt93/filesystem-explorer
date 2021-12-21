@@ -2,6 +2,7 @@ const inputFileUpload = document.getElementById('fileToUpload');
 inputFileUpload.addEventListener('change', chooseFileOrFolder);
 const inputFolderUpload = document.getElementById('folderToUpload');
 inputFolderUpload.addEventListener('change', chooseFileOrFolder);
+const endpoint = "./files/";
 
 function chooseFileOrFolder(event) {
     if (event.target.name === 'fileToUpload') {
@@ -28,12 +29,30 @@ async function uploadFile(form_data, event) {
     const response = await fetch("./uploadFile.php", parameters);
 }
 
+async function allFiles(path) {
+    const response = await fetch(`./allFiles.php?path=./${path}`);
+    const data = await response.json();
+    return data;
+}
+
 async function listFilesOfDirectory() {
     const response = await fetch("./listFilesOfDirectory.php?folder=./files");
     const data = await response.json();
+    return data;
 }
 
-async function fileInfo() {
-    const response = await fetch("./fileInfo.php?path=./files/Education.txt");
+async function fileInfo(file) {
+    const response = await fetch(`./fileInfo.php?path=./files/${file}`);
     const data = await response.json();
+    return data;
 }
+
+window.addEventListener("DOMContentLoaded", async() => {
+    const data = await allFiles(endpoint);
+    console.log(data);
+    const files = await listFilesOfDirectory();
+    for (const file in files) {
+        const data = await fileInfo(files[file]);
+        console.log(data);
+    }
+});

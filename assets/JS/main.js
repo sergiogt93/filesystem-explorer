@@ -37,12 +37,12 @@ async function allFiles(path) {
 
 async function listFilesOfDirectory() {
     const response = await fetch("./listFilesOfDirectory.php?folder=./files");
-    const data = await response.json();
+    const data = await response.json(); 
     return data;
 }
 
-async function fileInfo(file) {
-    const response = await fetch(`./fileInfo.php?path=./files/${file}`);
+async function fileInfo(path) {
+    const response = await fetch(`./fileInfo.php?path=./files/${path}`);
     const data = await response.json();
     return data;
 }

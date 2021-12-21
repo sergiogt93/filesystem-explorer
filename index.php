@@ -41,8 +41,8 @@
             <div class="list-group" id="listAllFiles">
             </div>
         </section>
-        <section class="container-fluid border border-dark">
-                <div class="row border border-dark" id="listFile">
+        <section class="container-fluid border border-dark" id="listFiles">
+                <div class="row border border-dark">
                     <div class="col-sm">
                         Name
                     </div>
@@ -61,6 +61,7 @@
                     <i class="far fa-trash-alt"></i>
                     </div>
                 </div>
+
             </div>
         </section>
     </main>

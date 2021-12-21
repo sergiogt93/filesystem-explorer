@@ -38,7 +38,11 @@
                 <button class="btn btn-primary m-2">Upload File</button>
                 <input type="file" id="fileToUpload" name='fileToUpload' class="fileToUpload">
             </form>
-            <div class="list-group" id="listAllFiles">
+            <div class="list-group">
+                <?php
+                    require_once("./allFiles.php");
+                    $files=listFolderFiles("./files");
+                ?>
             </div>
         </section>
         <section class="container-fluid border border-dark flex-grow-1" id="listFiles">
@@ -61,8 +65,6 @@
                     <i class="far fa-trash-alt"></i>
                     </div>
                 </div>
-
-            </div>
         </section>
     </main>
     <!-- Bootstrap core JS-->

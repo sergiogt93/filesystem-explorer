@@ -62,3 +62,27 @@ async function displayAllFoldersOnFolder(folder) {
 function selectedFolder(e) {
     console.log(e.target.textContent);
 }
+
+function editFile(e) {
+    const father = e.parentElement.parentElement;
+    const fileName = father.querySelector('.data-name');
+    const extName = father.querySelector('.data-extension');
+    createEditModal();
+    const editNameModalContainer = document.getElementById('modalEditName');
+    editNameModalContainer.value =
+        fileName.textContent + '.' + extName.textContent;
+    const submitEdit = document
+        .getElementById('submitEdit')
+        .addEventListener('click', updateFile);
+}
+
+function updateFile() {
+    const fileName = document.getElementById('modalEditName');
+    alert(fileName.value);
+}
+
+function deleteFile(e) {
+    // const father = e.parentElement.parentElement;
+    // console.log(father);
+    // document.querySelector('#modalContentEdit').innerHTML = "";
+}

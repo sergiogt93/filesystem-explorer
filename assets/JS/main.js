@@ -8,8 +8,10 @@ const listFiles = document.getElementById('listFiles');
 function chooseFileOrFolder(event) {
     if (event.target.name === 'fileToUpload') {
         const form_data = new FormData();
+        // console.log(form_data);
         form_data.append('fileToUpload', inputFileUpload.files[0]);
         uploadFile(form_data, event);
+        // console.log(form_data);
     } else if (event.target.name === 'folderToUpload') {
         const form_data = new FormData();
         form_data.append('folderToUpload', inputFolderUpload.files);
@@ -46,15 +48,14 @@ async function displayOneFolderAllFiles(folder) {
     const files = await listFilesOfDirectory(folder);
     for (const fileName in files) {
         const data = await fileInfo(files[fileName]);
-        console.log(data);
         const template = ` 
         <div class="row border border-dark">
-            <div class="col-sm">${data.name}</div>
+            <div class="col-sm" id="dataName">${data.name}</div>
             <div class="col-sm">${data.lastModified}</div>
             <div class="col-sm">${data.extension}</div>
             <div class="col-sm">${data.size}</div>
             <div class="col-sm">
-                <i class="fas fa-edit" onclick="editFile(this)"></i>
+                <i class="fas fa-edit" type="button" data-toggle="modal"  data-target="#exampleModal" onclick="editFile(this)"></i>
                 </div>
             <div class="col-sm" onclick="deleteFile(this)">
                 <i class="far fa-trash-alt"></i>
@@ -69,9 +70,28 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 function editFile(e){
-    const father = e.parentElement.parentElement;
+
+    // alert("hi")
+    // const father = e.parentElement.parentElement;
+    // console.log("hello")
+    // alert(document.querySelector('#modalContentEdit').innerHTML)
+    document.querySelector('#modalContentEdit').innerHTML = 
+
+    
+    `<div class="md-form mb-4">
+    <label data-error="wrong" data-success="right" for="orangeForm-pass">Name:</label>
+    <input type="text"id="nameEdit" class="form-control validate">
+  </div>`
+
+//   document.getElementById('nameEdit').value = document.getElementById('dataName').innerHTML;
+
+
 }
+
+deleteFile();
 
 function deleteFile(e){
     const father = e.parentElement.parentElement;
+    console.log(father)
 }
+

@@ -31,7 +31,7 @@
         </form>
     </nav>
     <main class="d-flex justify-content-start mr-auto">
-        <section class="container-sm border-end bg-white flex-shrink-1 mr-auto">
+        <section class="container border-end bg-white flex-shrink-1 mr-auto col-3">
             <form encaptype="multipart/form-data">
                 <button class="btn btn-primary m-2">Upload Folder</button>
                 <input type="file" name='folderToUpload' class="folderToUpload" webkitdirectory mozdirectory id="folderToUpload">
@@ -40,33 +40,49 @@
             </form>
             <div class="list-group">
                 <?php
-                    require_once("./allFiles.php");
-                    $files=listFolderFiles("./files");
+                require_once("./allFiles.php");
+                $files = listFolderFiles("./files");
                 ?>
             </div>
         </section>
-        <section class="container-fluid border border-dark flex-grow-1" id="listFiles">
-                <div class="row border border-dark">
-                    <div class="col-sm">
-                        Name
-                    </div>
-                    <div class="col-sm">
-                        Last Modified </div>
-                    <div class="col-sm">
-                        .ext
-                    </div>
-                    <div class="col-sm">
-                        Size
-                    </div>
-                    <div class="col-sm">
+        <section class="container-fluid border border-dark flex-grow-1 col-9" id="listFiles">
+            <div class="row border border-dark">
+                <div class="col-md">Name</div>
+                <div class="col-md">Last Modified </div>
+                <div class="col-sm">.ext</div>
+                <div class="col-sm">Size</div>
+                <div class="col-sm">
                     <i class="fas fa-edit"></i>
-                    </div>
-                    <div class="col-sm">
-                    <i class="far fa-trash-alt"></i>
-                    </div>
                 </div>
+                <div class="col-sm">
+                    <i class="far fa-trash-alt"></i>
+                </div>
+            </div>
         </section>
     </main>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit File / Folder</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id='modalContentEdit'>
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

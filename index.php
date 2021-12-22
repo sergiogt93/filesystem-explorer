@@ -33,10 +33,9 @@
     <main class="d-flex justify-content-start mr-auto">
         <section class="container border-end bg-white flex-shrink-1 mr-auto col-3">
             <form encaptype="multipart/form-data">
-                <button class="btn btn-primary m-2">Upload Folder</button>
-                <input type="file" name='folderToUpload' class="folderToUpload" webkitdirectory mozdirectory id="folderToUpload">
-                <button class="btn btn-primary m-2">Upload File</button>
-                <input type="file" id="fileToUpload" name='fileToUpload' class="fileToUpload">
+                <label class="m-2">Upload File
+                    <input type="file" id="fileToUpload" name='fileToUpload' class="fileToUpload">
+                </label>
             </form>
             <div class="list-group" id="treeFiles">
             </div>
@@ -51,7 +50,7 @@
                     <i class="fas fa-edit"></i>
                 </div>
                 <div class="col-sm">
-                <a href="#modalDeleteFile"<i class="far fa-trash-alt"></i></a>;
+                    <i class="far fa-trash-alt"></i>
                 </div>
             </div>
         </section>

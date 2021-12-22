@@ -1,7 +1,5 @@
 const inputFileUpload = document.getElementById('fileToUpload');
-inputFileUpload.addEventListener('change', chooseFileOrFolder);
-const inputFolderUpload = document.getElementById('folderToUpload');
-inputFolderUpload.addEventListener('change', chooseFileOrFolder);
+inputFileUpload.addEventListener("click", uploadFile);
 let endpoint = './files/';
 const listFiles = document.getElementById('listFiles');
 const treeFiles = document.getElementById('treeFiles');
@@ -11,25 +9,23 @@ window.addEventListener('DOMContentLoaded', async () => {
     displayAllFoldersOnFolder(endpoint);
 });
 
-function chooseFileOrFolder(event) {
-    if (event.target.name === 'fileToUpload') {
-        const form_data = new FormData();
-        // console.log(form_data);
-        form_data.append('fileToUpload', inputFileUpload.files[0]);
-        uploadFile(form_data, event);
-        // console.log(form_data);
-    } else if (event.target.name === 'folderToUpload') {
-        const form_data = new FormData();
-        form_data.append('folderToUpload', inputFolderUpload.files);
-        console.log(inputFolderUpload.files);
-        // uploadFile(form_data, event);
-    }
+async function uploadFile(event) {
+    const form_data = new FormData();
+    form_data.append('fileToUpload', inputFileUpload.files[0]);
+    const parameters = {
+        method: 'POST',
+        body: form_data
+    };
+    const response = await fetch('./uploadFile.php', parameters);
+    displayOneFolderAllFiles(endpoint);
+    displayAllFoldersOnFolder(endpoint);
 }
 
 async function displayOneFolderAllFiles(folder) {
+    clearInforFiles();
     const files = await listFilesOfDirectory(folder);
     for (const fileName in files) {
-        const data = await fileInfo(files[fileName]);
+        const data = await fileInfo(folder + "/" + files[fileName]);
         const template = `
         <div class="row border border-dark">
             <div class="col-sm data-name">${data.name}</div>
@@ -47,11 +43,25 @@ async function displayOneFolderAllFiles(folder) {
     }
 }
 
+function clearInforFiles() {
+    while(listFiles.children.length > 1) {
+        listFiles.lastChild.remove();
+    }
+}
+
+function clearTreeFolders() {
+    while(treeFiles.children.length > 0) {
+        treeFiles.lastChild.remove();
+    }
+}
+
 async function displayAllFoldersOnFolder(folder) {
+    clearTreeFolders();
     const folders = await listFoldersOfDirectory(folder);
     let newList = document.createElement("ol");
     for (const folder in folders) {
         let newItem = document.createElement("li");
+        newItem.dataset.url = endpoint + folders[folder] + "/";
         newItem.textContent = folders[folder];
         newList.appendChild(newItem);
         newItem.addEventListener("click", selectedFolder);
@@ -60,7 +70,9 @@ async function displayAllFoldersOnFolder(folder) {
 }
 
 function selectedFolder(e) {
-    console.log(e.target.textContent);
+    endpoint = endpoint + e.target.textContent + "/";
+    displayOneFolderAllFiles(endpoint);
+    displayAllFoldersOnFolder(endpoint);
 }
 
 function editFile(e) {
@@ -71,22 +83,16 @@ function editFile(e) {
     const editNameModalContainer = document.getElementById('newName');
     const oldName = document.getElementById('oldName');
     const path = document.getElementById('path')
-    editNameModalContainer.value =
-        fileName.textContent + '.' + extName.textContent;
+    editNameModalContainer.value = fileName.textContent + '.' + extName.textContent;
     oldName.value = fileName.textContent + "." + extName.textContent;
     path.value = endpoint
 }
 
 function removeElement(e) {
-
     modalDeleteFile();
     const father = e.parentElement.parentElement;
     const fileName = father.querySelector('.data-name');
     const extName = father.querySelector('.data-extension');
-
-    document.querySelector('#pathName').textContent = endpoint +  fileName.textContent + '.' + extName.textContent;
-    
-    console.log(document.querySelector('#pathName').textContent)
-
-
+    const fullPath = endpoint +  fileName.textContent + '.' + extName.textContent;
+    document.querySelector('#pathName').textContent = fullPath;
 }

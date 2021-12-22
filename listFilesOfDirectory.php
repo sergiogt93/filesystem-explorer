@@ -1,13 +1,28 @@
 <?php
-    if(!isset($_GET['folder'])) {
-        return;
+    if(isset($_GET['folders'])) {
+        listFoldersOfDirec($_GET['folders']);
     }
 
-    $folder = $_GET['folder'];
-    $files = scandir($folder);
-    unset($files[array_search('.', $files, true)]);
-    unset($files[array_search('..', $files, true)]);
+    if(isset($_GET['files'])) {
+        listFilesOfDirec($_GET['files']);
+    }
 
-    $listFilter = array_filter($files, fn ($file) => !is_dir($folder.'/'.$file));
+    function listFilesOfDirec($folder) {
+        $files = scandir($folder);
+        unset($files[array_search('.', $files, true)]);
+        unset($files[array_search('..', $files, true)]);
 
-    echo json_encode($listFilter);
+        $listFilter = array_filter($files, fn ($file) => !is_dir($folder.'/'.$file));
+
+        echo json_encode($listFilter);
+    }
+    
+    function listFoldersOfDirec($folder) {
+        $files = scandir($folder);
+        unset($files[array_search('.', $files, true)]);
+        unset($files[array_search('..', $files, true)]);
+
+        $listFilter = array_filter($files, fn ($file) => is_dir($folder.'/'.$file));
+
+        echo json_encode($listFilter);
+    }

@@ -4,6 +4,12 @@ const inputFolderUpload = document.getElementById('folderToUpload');
 inputFolderUpload.addEventListener('change', chooseFileOrFolder);
 const endpoint = './files/';
 const listFiles = document.getElementById('listFiles');
+const treeFiles = document.getElementById('treeFiles');
+
+window.addEventListener('DOMContentLoaded', async () => {
+    displayOneFolderAllFiles(endpoint);
+    displayAllFoldersOnFolder(endpoint);
+});
 
 function chooseFileOrFolder(event) {
     if (event.target.name === 'fileToUpload') {
@@ -20,35 +26,11 @@ function chooseFileOrFolder(event) {
     }
 }
 
-async function uploadFile(form_data, event) {
-    if (event.target.files.length == 0) {
-        return;
-    }
-    const parameters = {
-        method: 'POST',
-        body: form_data
-    };
-
-    const response = await fetch('./uploadFile.php', parameters);
-}
-
-async function listFilesOfDirectory(path) {
-    const response = await fetch(`./listFilesOfDirectory.php?folder=${path}`);
-    const data = await response.json();
-    return data;
-}
-
-async function fileInfo(path) {
-    const response = await fetch(`./fileInfo.php?path=./files/${path}`);
-    const data = await response.json();
-    return data;
-}
-
 async function displayOneFolderAllFiles(folder) {
     const files = await listFilesOfDirectory(folder);
     for (const fileName in files) {
         const data = await fileInfo(files[fileName]);
-        const template = ` 
+        const template = `
         <div class="row border border-dark">
             <div class="col-sm" id="dataName">${data.name}</div>
             <div class="col-sm">${data.lastModified}</div>
@@ -65,33 +47,18 @@ async function displayOneFolderAllFiles(folder) {
     }
 }
 
-window.addEventListener('DOMContentLoaded', async () => {
-    displayOneFolderAllFiles(endpoint);
-});
-
-function editFile(e){
-
-    // alert("hi")
-    // const father = e.parentElement.parentElement;
-    // console.log("hello")
-    // alert(document.querySelector('#modalContentEdit').innerHTML)
-    document.querySelector('#modalContentEdit').innerHTML = 
-
-    
-    `<div class="md-form mb-4">
-    <label data-error="wrong" data-success="right" for="orangeForm-pass">Name:</label>
-    <input type="text"id="nameEdit" class="form-control validate">
-  </div>`
-
-//   document.getElementById('nameEdit').value = document.getElementById('dataName').innerHTML;
-
-
+async function displayAllFoldersOnFolder(folder) {
+    const folders = await listFoldersOfDirectory(folder);
+    let newList = document.createElement("ol");
+    for (const folder in folders) {
+        let newItem = document.createElement("li");
+        newItem.textContent = folders[folder];
+        newList.appendChild(newItem);
+        newItem.addEventListener("click", selectedFolder);
+    }
+    treeFiles.appendChild(newList);
 }
 
-deleteFile();
-
-function deleteFile(e){
-    const father = e.parentElement.parentElement;
-    console.log(father)
+function selectedFolder(e) {
+    console.log(e.target.textContent);
 }
-

@@ -38,11 +38,7 @@
                 <button class="btn btn-primary m-2">Upload File</button>
                 <input type="file" id="fileToUpload" name='fileToUpload' class="fileToUpload">
             </form>
-            <div class="list-group">
-                <?php
-                require_once("./allFiles.php");
-                $files = listFolderFiles("./files");
-                ?>
+            <div class="list-group" id="treeFiles">
             </div>
         </section>
         <section class="container-fluid border border-dark flex-grow-1 col-9" id="listFiles">
@@ -86,6 +82,7 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
+    <script src="./assets/JS/peticionsAPI.js"></script>
     <script src="./assets/JS/main.js"></script>
 </body>
 

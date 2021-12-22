@@ -30,9 +30,9 @@ function listFolderFiles($dir){
     if (count($list) < 1)
         return;
 
-    echo '<ol>';
+    echo '<ol class="filesTree">';
     foreach($list as $file){
-        echo '<li>'.$file;
+        echo '<li data-url='.$dir.'/'.$file.'>'.$file;
         if(is_dir($dir.'/'.$file)) listFolderFiles($dir.'/'.$file);
         echo '</li>';
     }

@@ -2,7 +2,7 @@ const inputFileUpload = document.getElementById('fileToUpload');
 inputFileUpload.addEventListener('change', chooseFileOrFolder);
 const inputFolderUpload = document.getElementById('folderToUpload');
 inputFolderUpload.addEventListener('change', chooseFileOrFolder);
-const endpoint = './files/';
+let endpoint = './files/';
 const listFiles = document.getElementById('listFiles');
 
 function chooseFileOrFolder(event) {
@@ -50,48 +50,59 @@ async function displayOneFolderAllFiles(folder) {
         const data = await fileInfo(files[fileName]);
         const template = ` 
         <div class="row border border-dark">
-            <div class="col-sm" id="dataName">${data.name}</div>
+            <div class="col-sm data-name">${data.name}</div>
             <div class="col-sm">${data.lastModified}</div>
-            <div class="col-sm">${data.extension}</div>
+            <div class="col-sm data-extension">${data.extension}</div>
             <div class="col-sm">${data.size}</div>
             <div class="col-sm">
-                <i class="fas fa-edit" type="button" data-toggle="modal"  data-target="#exampleModal" onclick="editFile(this)"></i>
+                <button onclick="editFile(this)" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit" type="button"  ></i></button>
                 </div>
-            <div class="col-sm" onclick="deleteFile(this)">
-                <i class="far fa-trash-alt"></i>
+            <div class="col-sm">
+                <button data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i></button>
             </div>
         </div>`;
-        listFiles.insertAdjacentHTML("beforeend", template);
+        listFiles.insertAdjacentHTML('beforeend', template);
     }
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
     displayOneFolderAllFiles(endpoint);
+    selectFolder();
 });
 
-function editFile(e){
-
-    // alert("hi")
-    // const father = e.parentElement.parentElement;
-    // console.log("hello")
-    // alert(document.querySelector('#modalContentEdit').innerHTML)
-    document.querySelector('#modalContentEdit').innerHTML = 
-
-    
-    `<div class="md-form mb-4">
-    <label data-error="wrong" data-success="right" for="orangeForm-pass">Name:</label>
-    <input type="text"id="nameEdit" class="form-control validate">
-  </div>`
-
-//   document.getElementById('nameEdit').value = document.getElementById('dataName').innerHTML;
-
-
-}
-
-deleteFile();
-
-function deleteFile(e){
+function editFile(e) {
     const father = e.parentElement.parentElement;
-    console.log(father)
+    const fileName = father.querySelector('.data-name');
+    const extName = father.querySelector('.data-extension');
+    createEditModal();
+    const editNameModalContainer = document.getElementById('modalEditName');
+    editNameModalContainer.value =
+        fileName.textContent + '.' + extName.textContent;
+    const submitEdit = document
+        .getElementById('submitEdit')
+        .addEventListener('click', updateFile);
 }
+
+function updateFile() {
+    const fileName = document.getElementById('modalEditName');
+    alert(fileName.value);
+}
+
+function deleteFile(e) {
+    // const father = e.parentElement.parentElement;
+    // console.log(father);
+    // document.querySelector('#modalContentEdit').innerHTML = "";
+}
+
+function selectFolder() {
+    let childrens = document.querySelectorAll(".filesTree li");
+
+    for (const file of childrens) {
+        file.addEventListener('click', () => {
+            // listFilesOfDirectory(endpoint + file.textContent) 
+            console.log(file.dataset.url)
+        });
+    }
+}
+
 

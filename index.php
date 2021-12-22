@@ -51,10 +51,11 @@
                     <i class="fas fa-edit"></i>
                 </div>
                 <div class="col-sm">
-                    <i class="far fa-trash-alt"></i>
+                <a href="#modalDeleteFile"<i class="far fa-trash-alt"></i></a>;
                 </div>
             </div>
         </section>
+
     </main>
 
 

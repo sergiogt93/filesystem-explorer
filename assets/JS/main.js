@@ -40,7 +40,7 @@ async function displayOneFolderAllFiles(folder) {
                 <button onclick="editFile(this)" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit" type="button"  ></i></button>
                 </div>
             <div class="col-sm">
-                <button data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i></button>
+                <button onclick="removeElement(this)" data-toggle="modal" data-target="#modalDeleteFile"><i class="far fa-trash-alt"></i></button>
             </div>
         </div>`;
         listFiles.insertAdjacentHTML('beforeend', template);
@@ -68,21 +68,25 @@ function editFile(e) {
     const fileName = father.querySelector('.data-name');
     const extName = father.querySelector('.data-extension');
     createEditModal();
-    const editNameModalContainer = document.getElementById('modalEditName');
+    const editNameModalContainer = document.getElementById('newName');
+    const oldName = document.getElementById('oldName');
+    const path = document.getElementById('path')
     editNameModalContainer.value =
         fileName.textContent + '.' + extName.textContent;
-    const submitEdit = document
-        .getElementById('submitEdit')
-        .addEventListener('click', updateFile);
+    oldName.value = fileName.textContent + "." + extName.textContent;
+    path.value = endpoint
 }
 
-function updateFile() {
-    const fileName = document.getElementById('modalEditName');
-    alert(fileName.value);
-}
+function removeElement(e) {
 
-function deleteFile(e) {
-    // const father = e.parentElement.parentElement;
-    // console.log(father);
-    // document.querySelector('#modalContentEdit').innerHTML = "";
+    modalDeleteFile();
+    const father = e.parentElement.parentElement;
+    const fileName = father.querySelector('.data-name');
+    const extName = father.querySelector('.data-extension');
+
+    document.querySelector('#pathName').textContent = endpoint +  fileName.textContent + '.' + extName.textContent;
+    
+    console.log(document.querySelector('#pathName').textContent)
+
+
 }

@@ -2,7 +2,7 @@ const inputFileUpload = document.getElementById('fileToUpload');
 inputFileUpload.addEventListener('change', chooseFileOrFolder);
 const inputFolderUpload = document.getElementById('folderToUpload');
 inputFolderUpload.addEventListener('change', chooseFileOrFolder);
-const endpoint = './files/';
+let endpoint = './files/';
 const listFiles = document.getElementById('listFiles');
 const treeFiles = document.getElementById('treeFiles');
 
@@ -32,18 +32,18 @@ async function displayOneFolderAllFiles(folder) {
         const data = await fileInfo(files[fileName]);
         const template = `
         <div class="row border border-dark">
-            <div class="col-sm" id="dataName">${data.name}</div>
+            <div class="col-sm data-name">${data.name}</div>
             <div class="col-sm">${data.lastModified}</div>
-            <div class="col-sm">${data.extension}</div>
+            <div class="col-sm data-extension">${data.extension}</div>
             <div class="col-sm">${data.size}</div>
             <div class="col-sm">
-                <i class="fas fa-edit" type="button" data-toggle="modal"  data-target="#exampleModal" onclick="editFile(this)"></i>
+                <button onclick="editFile(this)" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit" type="button"  ></i></button>
                 </div>
-            <div class="col-sm" onclick="deleteFile(this)">
-                <i class="far fa-trash-alt"></i>
+            <div class="col-sm">
+                <button data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i></button>
             </div>
         </div>`;
-        listFiles.insertAdjacentHTML("beforeend", template);
+        listFiles.insertAdjacentHTML('beforeend', template);
     }
 }
 

@@ -7,10 +7,10 @@ if (isset($_POST['submitEdit'])) {
 };
 
 if(isset($_POST['modalDeleteBtn'])) {
-    // unlink($_POST['pathName']);
+    unlink($_POST['pathName']);
     print_r($_POST);
 }
 
-// header("Location:./index.php");
+header("Location:./index.php");
 
 ?>

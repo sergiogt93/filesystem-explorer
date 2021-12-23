@@ -94,5 +94,5 @@ function removeElement(e) {
     const fileName = father.querySelector('.data-name');
     const extName = father.querySelector('.data-extension');
     const fullPath = endpoint +  fileName.textContent + '.' + extName.textContent;
-    document.querySelector('#pathName').textContent = fullPath;
+    document.querySelector('#pathName').value = fullPath;
 }
